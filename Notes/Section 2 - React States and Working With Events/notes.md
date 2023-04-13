@@ -304,7 +304,7 @@ ExpenseItem component is being used in Expense.js 4 times.
 
 Every individual ExpenseItem component receives its own state which is detached/different form the other states.
 
-This implies that the useState() function residing inside the ExpenseItem component is called 4 times individually by the 4 different ExpenseItem component inside <Expenses/> component.
+This implies that the useState() function residing inside the ExpenseItem component is called 4 times individually by the 4 different ExpenseItem component inside Expenses component.
 
 #### ExpenseItem.js
 
