@@ -300,11 +300,11 @@ function Expenses(props) {
 export default Expenses;
 ```
 
-<ExpenseItem/> component is being used in Expense.js 4 times.
+ExpenseItem component is being used in Expense.js 4 times.
 
-Every individual <ExpenseItem/> component receives its own state which is detached/different form the other states.
+Every individual ExpenseItem component receives its own state which is detached/different form the other states.
 
-This implies that the useState() function residing inside the <ExpenseItem/> component is called 4 times individually by the 4 different <ExpenseItem/> component inside <Expenses/> component.
+This implies that the useState() function residing inside the ExpenseItem component is called 4 times individually by the 4 different ExpenseItem component inside <Expenses/> component.
 
 #### ExpenseItem.js
 
@@ -339,11 +339,11 @@ function ExpenseItem(props) {
 export default ExpenseItem;
 ```
 
-Each <ExpenseItem/> component receives it own state, this can be observed in the following image:
+Each ExpenseItem component receives it own state, this can be observed in the following image:
 
-![Each <ExpenseItem/> component has its own state](<../Screenshots/Section 2 - React States and Working With Events/2.4.1.png>)
+![Each ExpenseItem component has its own state](<../Screenshots/Section 2 - React States and Working With Events/2.4.1.png>)
 
-Updating the title of the 1st <ExpenseItem/> component does not update the other 3 <ExpenseItem/> component. This is because, each of the <ExpenseItem/> component has its own state. It's on a per component instance basis.
+Updating the title of the 1st ExpenseItem component does not update the other 3 ExpenseItem component. This is because, each of the ExpenseItem component has its own state. It's on a per component instance basis.
 
 #### ExpenseItem.js
 
@@ -371,7 +371,7 @@ function ExpenseItem(props) {
 }
 ```
 
-Four separate instances of the <ExpenseItem/> component are being created. Hence, the output "ExpenseItem is evaluated by React" is displayed 4 times.
+Four separate instances of the ExpenseItem component are being created. Hence, the output "ExpenseItem is evaluated by React" is displayed 4 times.
 
 ![Output displayed by 4 separate instances of the same component](<../Screenshots/Section 2 - React States and Working With Events/2.4.2.png>)
 
