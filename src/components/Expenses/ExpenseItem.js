@@ -4,8 +4,7 @@ import "./ExpenseItem.css";
 import ExpenseDate from "./ExpenseDate";
 import Card from "../UI/Card";
 
-function ExpenseItem(props) {
-
+const ExpenseItem = function(props){
     const [title, setTitle] = useState(props.title);
     // const expenseDate = new Date(2021, 2, 28);
     // const expenseTitle = "Car Insurance";
@@ -31,5 +30,6 @@ function ExpenseItem(props) {
         </Card>
     );
 }
+
 
 export default ExpenseItem;
