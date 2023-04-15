@@ -703,6 +703,32 @@ const ExpenseForm = function () {
 export default ExpenseForm;
 ```
 
+Inside of the setUserInput object, if we only mention enteredTitle: event.target.value..  then key and value pairs for enteredAmount and enteredDate will be lost, i.e the date for enteredAmount and enteredDate will be lost.
+
+```js
+const titleChangeHandler = function(event){
+  setUserInput({
+    enteredTitle: event.target.value; // Data for enteredAmount and enteredDate will be lost.
+  })
+};
+```
+
+Why will the data for enteredAmount and enteredDate be lost?
+
+This is because React replaces the old state for the new one so the object as a whole will be replaced and not just a particular that has undergone a change in its value. So in order to change the value for enteredTitle as well as keep the existing data for enteredAmount and enteredDate, we do the following:
+
+```js
+const titleChangeHandler = function(event){
+  setUserInput({
+    ...userInput,
+    enteredTitle: event.target.value;
+  })
+};
+```
+
+So what we are doing above is that first by destructuring we take in all the userInput key-value pairs, and then we override the desired key-value pair (here, enteredTitle) and by doing this we ensure that the other values are not lost or thrown away but are a part of the new state.
+
+
 ## 9. Updating State That Depends On The Previous State
 
 Now, the way we are using and updating a single state is not entirely correct. It would technically work, however it would fail in some niche scenarios and it's simply not a good practice to update your state like this.
