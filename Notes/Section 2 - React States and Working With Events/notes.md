@@ -1122,6 +1122,8 @@ An object is then created (here, newExpenseData) which stores the expense title,
 
 ![Submitting the form using 'Add Expense' button](<../Screenshots/Section 2 - React States and Working With Events/2.10.1.png>)
 
+Now, we have to clear the existing inputs in order to receive new inputs again when the 'submit' button is clicked.
+
 ## 11. Adding Two-Way Binding
 
 We are now going to see how clear the user inputs once the form has been submitted using two-way binding. Two-way binding is a key concept in React.
