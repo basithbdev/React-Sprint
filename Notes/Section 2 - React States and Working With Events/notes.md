@@ -1116,7 +1116,7 @@ What is event.preventDefault() ?
 
 Now, by default a request is sent to the server every time the form is submitted. The server then sends the page again to the client which causes the page to reload. In order to prevent this default behavior, the preventDefault() method is used.
 
-An object is then created (here, newExpenseDate) which stores the expense title, expense amount and expense date entered by the user and displays it.
+An object is then created (here, newExpenseData) which stores the expense title, expense amount and expense date entered by the user and displays it.
 
 #### Output
 
