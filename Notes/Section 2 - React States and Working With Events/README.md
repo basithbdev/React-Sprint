@@ -23,3 +23,5 @@
 #### 10. Handling Form Submission
 
 #### 11. Adding Two-Way Binding
+
+#### 12. Child-to-Parent Component Communication (Bottom-up)

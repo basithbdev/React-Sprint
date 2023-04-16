@@ -1130,6 +1130,8 @@ We are now going to see how clear the user inputs once the form has been submitt
 
 Two-way binding simply means that for inputs we don't just listen to changes but we can also pass a new value back into the input, so that we can reset or change the input programmatically.
 
+#### ExpenseForm.js
+
 ```javascript
 import React, { useState } from "react";
 
@@ -1285,3 +1287,259 @@ const formSubmitHandler = function (event) {
 #### Output
 
 ![Submitting the form using 'Add Expense' button](<../Screenshots/Section 2 - React States and Working With Events/2.11.1.png>)
+
+## 12. Child-to-Parent Component Communication (Bottom-up)
+
+We have previously learned how to transfer content or data from the parent component to the child component using props.
+
+Now, we will look into how we can transfer data from the child component to the parent component. 
+
+*Note:* Props can only be passed from parent to child components, we CANNOT skip intermediate components.
+
+We are going to pass expenseData which resides in ExpenseForm component to NewExpense component. To do this, we will add a new prop to ExpenseForm.
+
+#### NewExpense.js
+
+```js
+import ExpenseForm from './ExpenseForm';
+import './NewExpense.css';
+
+const NewExpense = function () {
+
+    const saveExpenseDataHandler = function (enteredExpenseData) {
+        const expenseData = {
+            ...enteredExpenseData,
+            id: Math.random().toString()
+        };
+
+    }
+
+    // SEE HERE
+    return (
+        <div className="new-expense">
+            <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} />
+
+        </div>
+    )
+
+};
+
+export default NewExpense;
+```
+
+We write onSaveExpenseData because we want the value of this prop to be a function, which will be triggered when something happens inside of the ExpenseForm component (here, when the form is submitted).
+
+You can name the prop anything you want, by convention we just use the prefix on to indicate that the value of the prop as mentioned above should be a function.
+
+The data is being logged from the child component i.e ExpenseForm component to the parent component i.e NewExpense component.
+
+```js
+import ExpenseForm from './ExpenseForm';
+import './NewExpense.css';
+
+const NewExpense = function () {
+
+    const saveExpenseDataHandler = function (enteredExpenseData) {
+        const expenseData = {
+            ...enteredExpenseData,
+            id: Math.random().toString()
+        };
+
+    }
+
+    // SEE HERE
+    return (
+        <div className="new-expense">
+            <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} />
+
+        </div>
+    )
+
+};
+
+export default NewExpense;
+```
+
+To access the onSaveExpenseData prop, we use props.. i.e look at the snippet below
+
+```js
+const ExpenseForm = function(props){
+  ...
+}
+```
+
+Now, we are trying to log the expenseData value form ExpenseForm (child) component to the NewExpense (parent) component. So we cannot use console.log(expenseData) inside of ExpenseForm component directly, we are going to call the onSaveExpenseData prop which has the saveExpenseDataHandler() function as a value. 
+
+It is the saveExpenseDataHandler() function that logs the expenseData value to the console.
+
+#### ExpenseForm.js
+
+```js
+import React, { useState } from 'react';
+import './ExpenseForm.css';
+
+const ExpenseForm = function (props) {
+
+    const [enteredTitle, setEnteredTitle] = useState("");
+    const [enteredAmount, setEnteredAmount] = useState("");
+    const [enteredDate, setEnteredDate] = useState("");
+
+    const titleChangeHandler = function (event) {
+        setEnteredTitle(event.target.value);
+    };
+
+    const amountChangeHandler = function (event) {
+        setEnteredAmount(event.target.value);
+    };
+
+    const dateChangeHandler = function (event) {
+        setEnteredDate(event.target.value);
+    }
+
+    const submitHandler = function (event) {
+        event.preventDefault();
+
+        const expenseData = {
+            title: enteredTitle,
+            amount: enteredAmount,
+            date: new Date(enteredDate),
+        };
+
+        // console.log(expenseData);
+        props.onSaveExpenseData(expenseData); // SEE HERE
+
+        setEnteredTitle("");
+        setEnteredAmount("");
+        setEnteredDate("");
+    }
+
+    return (
+        <form onSubmit={submitHandler}>
+            <div className="new-expense__controls">
+                <div className="new-expense__control">
+                    <label>Title</label>
+                    <input type="text" value={enteredTitle} onChange={titleChangeHandler} />
+                </div>
+
+                <div className="new-expense__control">
+                    <label>Amount</label>
+                    <input type="number" min="0.01" step="0.01"
+                        value={enteredAmount} onChange={amountChangeHandler} />
+                </div>
+
+                <div className="new-expense__control">
+                    <label>Date</label>
+                    <input type="date" min="2023-01-01" max="2024-01-01" value={enteredDate} onChange={dateChangeHandler} />
+                </div>
+            </div>
+
+            <div className="new-expense__actions">
+                <button type="submit">Add Expense</button>
+            </div>
+        </form>
+    )
+}
+
+export default ExpenseForm;
+```
+#### Output
+
+![adding expense inputs](<../Screenshots/Section 2 - React States and Working With Events/2.12.1.png>)
+
+![expenseData value displayed from NewExpense component](<../Screenshots/Section 2 - React States and Working With Events/2.12.2.png>)
+
+
+Now we are going to repeat the process, to log the expenseData value from the App component.
+
+So, first we add a new prop to the NewExpense component residing inside of the App component.
+
+#### App.js
+
+```js
+import Expenses from "./components/Expenses/Expenses";
+import NewExpense from "./components/NewExpense/NewExpense";
+
+function App() {
+
+  const displayExpenseDataHandler = function(savedExpenseData){
+    const expenseData = {
+      ...savedExpenseData
+    };
+
+    console.log(expenseData);
+  }
+
+  const expenses = [
+    {
+      id: 'e1',
+      title: 'Toilet Paper',
+      amount: 94.12,
+      date: new Date(2020, 7, 14),
+    },
+    { id: 'e2', title: 'New TV', amount: 799.49, date: new Date(2021, 2, 12) },
+    {
+      id: 'e3',
+      title: 'Car Insurance',
+      amount: 294.67,
+      date: new Date(2021, 2, 28),
+    },
+    {
+      id: 'e4',
+      title: 'New Desk (Wooden)',
+      amount: 450,
+      date: new Date(2021, 5, 12),
+    },
+  ];
+
+  // SEE HERE
+  return (
+    <div>
+      <NewExpense onDisplayExpenseData = {displayExpenseDataHandler}/>
+      <Expenses item={expenses} />
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+As shown above we want to log the expenseData value from the App component now by transferring the expenseData value residing in NewExpense component.
+
+So we use props, and then transfer the expenseData value as a parameter from NewExpense component to App component by calling 
+
+```js
+props.onDisplayExpenseData(expenseData);
+```
+
+#### NewExpense.js
+
+```js
+import ExpenseForm from './ExpenseForm';
+import './NewExpense.css';
+
+const NewExpense = function (props) {
+
+    const saveExpenseDataHandler = function (enteredExpenseData) {
+        const expenseData = {
+            ...enteredExpenseData,
+            id: Math.random().toString()
+        };
+
+        props.onDisplayExpenseData(expenseData);
+
+    }
+
+    return (
+        <div className="new-expense">
+            <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} />
+        </div>
+    )
+};
+
+export default NewExpense;
+```
+
+#### Output
+
+![expenseData value displayed from the App component](<../Screenshots/Section 2 - React States and Working With Events/2.12.3.png>)
