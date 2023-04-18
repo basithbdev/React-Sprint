@@ -25,3 +25,5 @@
 #### 11. Adding Two-Way Binding
 
 #### 12. Child-to-Parent Component Communication (Bottom-up)
+
+#### 13. Lifting The State Up

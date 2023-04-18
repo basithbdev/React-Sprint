@@ -1543,3 +1543,9 @@ export default NewExpense;
 #### Output
 
 ![expenseData value displayed from the App component](<../Screenshots/Section 2 - React States and Working With Events/2.12.3.png>)
+
+## 13. Lifting The State Up
+
+The term lifting the state up means to move data from a child component to a parent component to either use it there or to then pass it down to another child component.
+
+![lifting the state up](<../Screenshots/Section 2 - React States and Working With Events/2.13.1.png>)
