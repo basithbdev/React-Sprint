@@ -1549,3 +1549,69 @@ export default NewExpense;
 The term lifting the state up means to move data from a child component to a parent component to either use it there or to then pass it down to another child component.
 
 ![lifting the state up](<../Screenshots/Section 2 - React States and Working With Events/2.13.1.png>)
+
+## 14. Assignment 2 - Time to Practice: Working with Events & State
+
+#### ExpensesFilter.js
+
+```js
+import './ExpensesFilter.css';
+
+const ExpensesFilter = (props) => {
+
+  const dropdownYearChangeHandler = function(event){
+    props.onChangeExpensesFilter(event.target.value);
+  }
+
+  return (
+    <div className='expenses-filter'>
+      <div className='expenses-filter__control'>
+        <label>Filter by year</label>
+        <select value = {props.onSelectedYear} onChange={dropdownYearChangeHandler}>
+          <option value='2026'>2026</option>
+          <option value='2025'>2025</option>
+          <option value='2024'>2024</option>
+          <option value='2023'>2023</option>
+        </select>
+      </div>
+    </div>
+  );
+};
+
+export default ExpensesFilter;
+```
+
+#### Expenses.js
+
+```js
+import "./Expenses.css";
+import ExpenseItem from "./ExpenseItem";
+import ExpensesFilter from "../NewExpense/ExpensesFilter";
+import Card from "../UI/Card";
+import { useState } from "react";
+
+function Expenses(props) {
+
+    const [filteredYear, setFilteredYear] = useState('2023');
+
+    const expensesYearFilterChangeHandler = function (selectedYear) {
+        setFilteredYear(selectedYear);
+
+    };
+
+    return (
+        <div>
+            <Card className="expenses">
+                <ExpensesFilter onSelectedYear = {filteredYear} onChangeExpensesYearFilter={expensesYearFilterChangeHandler} />
+                <ExpenseItem title={props.item[0].title} amount={props.item[0].amount} date={props.item[0].date} />
+                <ExpenseItem title={props.item[1].title} amount={props.item[1].amount} date={props.item[1].date} />
+                <ExpenseItem title={props.item[2].title} amount={props.item[2].amount} date={props.item[2].date} />
+                <ExpenseItem title={props.item[3].title} amount={props.item[3].amount} date={props.item[3].date} />
+            </Card>
+        </div>
+    );
+}
+
+export default Expenses;
+
+```
